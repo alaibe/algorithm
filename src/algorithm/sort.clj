@@ -60,10 +60,33 @@
       r
       (recur r))))
 
+(defn- swap [a i j]
+  (assoc a i (nth a j) j (nth a i)))
+
+(defn- sift
+  [coll start end]
+  (loop [coll coll root start child (inc (* 2 root))]
+   (if (< (inc (* 2 root)) end)
+      (let [ch (if (and (< child (dec end)) (< (nth coll child) (nth coll (inc child))))
+                 (inc child)
+                 child)]
+        (if (< (nth coll root) (nth coll ch))
+          (recur (swap coll root ch) ch (inc (* 2 ch)))
+          coll))
+      coll)))
+
+(defn heap-sort
+  [coll]
+  (let [count (count coll)
+        init (reduce (fn [c i] (sift c i count))
+                     coll
+                     (range (int (/ (- 11 2) 2)) -1 -1))]
+    (reduce (fn [c i] (sift (swap c 0 i) 0 i)) init (range (dec count) 0 -1))))
+
 (let [l [5 3 1 2 9 0]]
   (println "Insertion sort" (insertion l))
   (println "Selection sort" (selection l))
   (println "Merge sort" (merge-sort l))
   (println "Quick sort" (quick-sort l))
-  (println "bubble sort" (bubble-sort l)))
-
+  (println "bubble sort" (bubble-sort l))
+  (println "Heap sort" (heap-sort l)))
