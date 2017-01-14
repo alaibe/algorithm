@@ -66,7 +66,7 @@
 (defn- sift
   [coll start end]
   (loop [coll coll root start child (inc (* 2 root))]
-   (if (< (inc (* 2 root)) end)
+    (if (< (inc (* 2 root)) end)
       (let [ch (if (and (< child (dec end)) (< (nth coll child) (nth coll (inc child))))
                  (inc child)
                  child)]
@@ -80,7 +80,7 @@
   (let [count (count coll)
         init (reduce (fn [c i] (sift c i count))
                      coll
-                     (range (int (/ (- 11 2) 2)) -1 -1))]
+                     (range (int (/ (- count 2) 2)) -1 -1))]
     (reduce (fn [c i] (sift (swap c 0 i) 0 i)) init (range (dec count) 0 -1))))
 
 (let [l [5 3 1 2 9 0]]
