@@ -83,10 +83,48 @@
                      (range (int (/ (- count 2) 2)) -1 -1))]
     (reduce (fn [c i] (sift (swap c 0 i) 0 i)) init (range (dec count) 0 -1))))
 
+(definterface INode
+  (insert [v])
+  (flatten [])
+  (show [])
+  )
+
+(deftype Node
+  [val
+   ^:volatile-mutable ^INode left
+   ^:volatile-mutable ^INode right]
+
+  INode
+  (insert [this v]
+    (let [n (Node. v nil nil)]
+      (cond
+        (>= v val) (if right
+                     (.insert right v)
+                     (set! right n))
+        (< v val) (if left
+                     (.insert left v)
+                     (set! left n)))
+      )
+    this)
+
+  (flatten [this]
+    (lazy-cat
+      (when left
+        (.flatten left))
+      (vector val)
+      (when right
+        (.flatten right))))
+  )
+
+(defn tree-sort
+  [[x & rest]]
+  (.flatten (reduce (fn [tree e] (.insert tree e)) (Node. x nil nil) rest)))
+
 (let [l [5 3 1 2 9 0]]
   (println "Insertion sort" (insertion l))
   (println "Selection sort" (selection l))
   (println "Merge sort" (merge-sort l))
   (println "Quick sort" (quick-sort l))
   (println "bubble sort" (bubble-sort l))
-  (println "Heap sort" (heap-sort l)))
+  (println "Heap sort" (heap-sort l))
+  (println "Tree sort" (tree-sort l)))
