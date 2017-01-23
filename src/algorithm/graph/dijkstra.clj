@@ -9,7 +9,7 @@
      (fn
        [c edge edge-value]
        (if (unvisited edge)
-         (update-in c [edge] min (current-cost edge-value))
+         (update-in c [edge] min (+ current-cost edge-value))
          c))
      costs
      (get graph current))))
@@ -19,15 +19,14 @@
   ([graph from to]
    (loop [costs (assoc (zipmap (keys graph) (repeat inf)) from 0)
           current from
-          unvisited (disj (keys graph) from)]
+          unvisited (disj (apply hash-set (keys graph)) from)]
      (cond
        (= current to) (select-keys costs [to])
        (empty? unvisited) costs
-       :else (let [new-costs (graph costs unvisited current)
-                   new-current (min-key new-costs unvisited)
-                   new-unvisted (disj unvisited new-current)]
-               (println new-current)
-               (recur new-costs new-current new-unvisted))))))
+       :else (let [new-costs (new-costs graph costs unvisited current)
+                   new-current (apply min-key new-costs unvisited)
+                   new-unvisited (disj unvisited new-current)]
+               (recur new-costs new-current new-unvisited))))))
 
 (def graph {:a {:b 8
                 :c 2
@@ -57,5 +56,6 @@
             :h {:f 3
                 :g 6}})
 
+(apply min-key {:a 0 :b 8} [:a :b])
 (println "Input Graph" graph)
 (println "Graph dijkstra" (dijkstra graph :a))
