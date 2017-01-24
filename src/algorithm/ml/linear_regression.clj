@@ -1,4 +1,4 @@
-(ns algorithm.linear-regression)
+(ns algorithm.ml.linear-regression)
 
 (defn square [x] (* x x))
 

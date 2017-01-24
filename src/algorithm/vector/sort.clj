@@ -1,4 +1,4 @@
-(ns algorithm.sort
+(ns algorithm.vector
   (:require [algorithm.tree :refer :all])
   (:import [algorithm.tree Node]))
 

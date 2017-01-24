@@ -1,4 +1,4 @@
-(ns algorithm.bloom-filter)
+(ns algorithm.vector.bloom-filter)
 
 (defn is?
   [atom v])
