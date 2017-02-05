@@ -48,7 +48,7 @@
       value [255]
       encoded (encode value public-key modulus)
       decoded (decode encoded private-key modulus)]
-  (println [public-key private-key modulus])
-  (println value)
-  (println encoded)
-  (println decoded))
+  (println "Public key, Private key, Modulus" [public-key private-key modulus])
+  (println "Message" value)
+  (println "Encoded" encoded)
+  (println "Decoded" decoded))
