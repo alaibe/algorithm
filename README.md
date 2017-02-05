@@ -1,14 +1,30 @@
-# algorithm
+# Algorithm
 
-A Clojure library designed to ... well, that part is up to you.
+A toy project to learn clojure 
+and at the same time revised 
+some algorithms:
+ 
+* Insertion sort
+* Selection sort
+* Merge sort
+* Quick sort
+* Heap sort
+* Bubble sort
+* Tree sort
+* Sequential search
+* Binary search
+* Dijkstra
+* Linear regression
+* RSA
+* Bloom filter
+* Miller-Rabin primality test
 
 ## Usage
 
-FIXME
+Don't, it has no intent to be used,
+You can probably find much better implementation elsewhere
 
 ## License
-
-Copyright © 2017 FIXME
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
